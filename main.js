@@ -57,6 +57,14 @@ function getDayOfWeek(dateString) {
 // ============================================================
 function getShiftDuration(startTime, endTime) {
     // TODO: Implement this function
+    let duration = timeToSeconds(endTime) - timeToSeconds(startTime);
+    
+    // 12 am problem , we add extra 24 hours :)
+    if (duration < 0) {
+        duration += 24 * 3600; 
+    }
+    
+    return secondsToTime(duration);
 }
 
 // ============================================================
