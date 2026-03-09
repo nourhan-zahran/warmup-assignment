@@ -1,4 +1,53 @@
 const fs = require("fs");
+//HELPERSSSSSSS
+function timeToSeconds(x){
+    // from 12 to 24 hours splits
+    let [time, period] = x.split(" ");
+    let [h , m ,s] = time.split(":");
+    
+    h = Number(h);
+    m = Number(m);
+    s = Number(s);
+    
+    // 2 - edge cases for 24h convertion
+    if (h == 12 && period == "am") {
+        h = 0;
+    }
+    else if (h != 12 && period == "pm") {
+        h = h + 12;
+    }
+    
+    // convert it to sec
+    let totalSeconds = h*3600 + m*60 + s;
+    return totalSeconds;
+}
+
+function secondsToTime(x){
+    // bac to the forma
+    let h = Math.floor(x / 3600);
+    let m = Math.floor((x % 3600) / 60);
+    let s = x % 60;
+    
+    // to look clean 
+    m = String(m).padStart(2,'0');
+    s = String(s).padStart(2,'0');
+
+    return h + ":" + m + ":" + s;
+}
+
+function getDayOfWeek(dateString) {
+    // Create date object - note: months are 0-indexed in JS!
+    const [year, month, day] = dateString.split('-').map(Number);
+    const date = new Date(year, month - 1, day); // month-1 because Jan is 0
+    
+    // Get day of week as string (e.g., "Friday")
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const dayIndex = date.getDay(); // 0 = Sunday, 1 = Monday, etc.
+    
+    return daysOfWeek[dayIndex];
+}
+
+//END OF HELPERSS
 
 // ============================================================
 // Function 1: getShiftDuration(startTime, endTime)
