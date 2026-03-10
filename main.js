@@ -74,7 +74,28 @@ function getShiftDuration(startTime, endTime) {
 // Returns: string formatted as h:mm:ss
 // ============================================================
 function getIdleTime(startTime, endTime) {
-    // TODO: Implement this function
+     // delivery starts 8:00AM and delivery ends 10:00PM, SO our Total idle time = (time from shiftStart to 8am) + (time from 10pm to shiftEnd)
+    // the given start and end times are the employees SHIFT TIME
+    //If shiftStart is after 8am, then first part = 0 AND If shiftEnd is before 10pm, then second part = 0
+    
+    let ShiftStart = timeToSeconds(startTime);
+    let ShiftEnd = timeToSeconds(endTime);
+    let deliveryStart = timeToSeconds("8:00:00 am");
+    let deliveryEnd = timeToSeconds("10:00:00 pm");
+    
+    let startIdle = 0;
+    if (ShiftStart < deliveryStart) {
+        startIdle = deliveryStart - ShiftStart;
+    }
+    
+    let endIdle =0;
+    if(ShiftEnd > deliveryEnd){
+        endIdle = ShiftEnd - deliveryEnd;
+    }
+    
+
+    let totalIdle = startIdle + endIdle;
+    return secondsToTime(totalIdle);
 }
 
 // ============================================================
